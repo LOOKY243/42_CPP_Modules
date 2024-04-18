@@ -2,15 +2,13 @@
 
 int main(void)
 {
-    Zombie MyZombie("Au revoir");
-    Zombie* Horde = ZombieHorde(5, "Merci");
-    MyZombie.announce();
+    int num = 5;
+    Zombie MyZombie("Hasboulla");
+    Zombie* Horde = ZombieHorde(num, "Abdel");
     
-    for (int i = 0; i < 5; i++)
-    {
-        std::cout << "[" << i << "]";
+    MyZombie.announce();
+    for (int i = 0; i < num; i++)
         Horde[i].announce();
-    }
     delete  [] Horde;
     return (0);
 }

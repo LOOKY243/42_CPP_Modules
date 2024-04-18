@@ -1,0 +1,19 @@
+#include <iostream>
+#include <cctype>
+
+int main(int argc, char *argv[])
+{
+    char    upper;
+    if (argc < 2) {   
+        std::cerr << "* LOUD AND UNBEARABLE FEEDBACK NOISE *\n";
+        return 1;
+    }
+    for (int i = 1; argv[i]; i++) {
+        for (int j = 0; argv[i][j]; j++) {
+            upper = std::toupper(argv[i][j]);
+            std::cout << upper;
+        }
+    }
+    std::cout << "\n";
+    return 0;
+}

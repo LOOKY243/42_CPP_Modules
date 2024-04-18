@@ -2,6 +2,7 @@
 
 HumanB::HumanB(std::string name)
 {
+    weaponB = NULL;
     _name = name;
 }
 
@@ -14,7 +15,8 @@ void    HumanB::attack(void)
     std::cout << _name << " attacks with their " << weaponB->getType() << std::endl;
 }
 
-void    HumanB::setWeapon(Weapon weapon)
+void    HumanB::setWeapon(Weapon &weapon)
 {
-    *weaponB = weapon;
+    delete weaponB;
+    weaponB = &weapon;
 }

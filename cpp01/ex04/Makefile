@@ -1,7 +1,7 @@
 CC=c++
-NAME = Violence
-SRCS = HumanA.cpp HumanB.cpp Weapon.cpp main.cpp
-HEADER = HumanA.hpp HumanB.hpp Weapon.hpp
+NAME = sed
+SRCS = main.cpp
+HEADER = main.hpp
 OBJS = $(SRCS:.cpp=.o)
 CFLAGS = -Wall -Wextra -Werror -g --std=c++98
 
@@ -19,6 +19,6 @@ fclean: clean
 clean:
 	rm -f $(OBJS)
 
-re:	fclean all
+re: fclean all
 
 .PHONY: all fclean clean re
