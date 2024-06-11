@@ -1,5 +1,5 @@
 #ifndef FIXED_HPP
-#   define FIXED_HPP
+# define FIXED_HPP
 
 #include <iostream>
 
@@ -10,11 +10,13 @@ class Fixed
         const static int _nFractional;
     public:
         Fixed(void);
-        Fixed(const int num);
-        Fixed(const float num);
-        const float &operator=(const float num);
+        Fixed(const Fixed &other);
+        Fixed &operator=(const Fixed &other);
 
         ~Fixed();
+
+        int getRawBits(void) const;
+        void setRawBits(int const raw);
 };
 
 #endif

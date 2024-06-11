@@ -15,7 +15,6 @@ class Fixed
         Fixed(const float num);
         Fixed(const Fixed &other);
         Fixed &operator=(const Fixed &other);
-        // TODO friend is not allowed, remove
         ~Fixed();
 
         int toInt(void) const;

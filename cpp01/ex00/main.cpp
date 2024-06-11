@@ -2,10 +2,10 @@
 
 int main(void)
 {
-    Zombie MyZombie("Cultamair");
-    Zombie* pZombie = newZombie("Jean");
+    Zombie MyZombie("camille");
+    Zombie* pZombie = newZombie("chloe");
     MyZombie.announce();
-    randomChump("etompair");
+    randomChump("sophia");
     delete(pZombie);
     return (0);
 }

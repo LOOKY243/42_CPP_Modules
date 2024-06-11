@@ -39,7 +39,7 @@ void    Harl::complain(std::string level)
     std::string names[4] = {"DEBUG", "INFO", "WARNING", "ERROR"};
     int lvl = 4;
     
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < 5; i++)
     {
         if (names[i] == level)
         {
@@ -47,25 +47,33 @@ void    Harl::complain(std::string level)
             break;
         }
     }
-    switch (lvl)
-    {
+    switch (lvl) {
         case 0:
-            (*this.*functions[0])();
-            (*this.*functions[1])();
-            (*this.*functions[2])();
-            (*this.*functions[3])();
+            for (int i = 0; i < 4; ++i) {
+                std::cout << "[" << names[i] << "]" << std::endl;
+                (this->*functions[i])();
+                std::cout << std::endl;
+            }
             break;
         case 1:
-            (*this.*functions[1])();
-            (*this.*functions[2])();
-            (*this.*functions[3])();
+            for (int i = 1; i < 4; ++i) {
+                std::cout << "[" << names[i] << "]" << std::endl;
+                (this->*functions[i])();
+                std::cout << std::endl;
+            }
             break;
         case 2:
-            (*this.*functions[2])();
-            (*this.*functions[3])();
+            for (int i = 2; i < 4; ++i) {
+                std::cout << "[" << names[i] << "]" << std::endl;
+                (this->*functions[i])();
+                std::cout << std::endl;
+            }
             break;
         case 3:
-            (*this.*functions[3])();
+            std::cout << "[" << names[3] << "]" << std::endl;
+            (this->*functions[3])();
             break;
+        case 4:
+            std::cout << "[ Probably complaining about insignificant problems ]" << std::endl;
     }
 }

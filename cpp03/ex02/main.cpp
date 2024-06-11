@@ -13,10 +13,12 @@ int main(){
 	clap.takeDamage(5);
 	clap.beRepaired(10);
 	scav.guardGate();
+	cout << endl << endl;
 	scav.attack("Sanji");
 	scav.beRepaired(10);
 	scav.takeDamage(10);
 	scav.guardGate();
+	cout << endl << endl;
 	scav.attack("Luffy");
 	frag.highFivesGuys();
 	frag.attack("Zorro");

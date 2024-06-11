@@ -11,7 +11,7 @@ ClapTrap::ClapTrap()
 
 ClapTrap::ClapTrap(std::string name, int hPoints, int ePoints, int ad)
 {
-    std::cout << "Default contructor has been called" << std::endl;
+    std::cout << "Parameterized contructor has been called" << std::endl;
     _name = name;
     _hPoints = hPoints;
     _ePoints = ePoints;
@@ -21,7 +21,7 @@ ClapTrap::ClapTrap(std::string name, int hPoints, int ePoints, int ad)
 ClapTrap::ClapTrap(const ClapTrap &other)
 {
     std::cout << "Copy constructor called" << std::endl;
-        _name = other._name;
+    _name = other._name;
     _hPoints = other._hPoints;
     _ePoints = other._ePoints;
     _ad = other._ad;
@@ -39,11 +39,12 @@ ClapTrap &ClapTrap::operator=(const ClapTrap &other)
 
 ClapTrap::~ClapTrap()
 {
+    std::cout << "ClapTrap destructor called" << std::endl;
 }
 
 void    ClapTrap::attack(const std::string &target)
 {
-    if (_ePoints > 0 || _hPoints)
+    if (_ePoints > 0 && _hPoints > 0)
     {
         std::cout << "ClapTrap " << _name << " attacks "
             << target << ", causing " << _ad << " points of damage!" << std::endl;
@@ -57,13 +58,17 @@ void    ClapTrap::attack(const std::string &target)
 
 void    ClapTrap::takeDamage(unsigned int amount)
 {
-    _hPoints -= amount;
-    _ePoints--;
+    if (_hPoints == 0)
+        std::cout << "ClapTrap " << _name << " is already dead" << std::endl;
+    else if ((unsigned int)_hPoints < amount)
+        _hPoints = 0;
+    else
+        _hPoints -= amount;
 }
 
 void    ClapTrap::beRepaired(unsigned int amount)
 {
-    if (_ePoints > 0)
+    if (_ePoints > 0 && _hPoints >= 0)
     {
         _hPoints += amount;
         std::cout << "ClapTrap " << _name << " regained "

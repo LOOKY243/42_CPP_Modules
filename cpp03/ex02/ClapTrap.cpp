@@ -39,11 +39,12 @@ ClapTrap &ClapTrap::operator=(const ClapTrap &other)
 
 ClapTrap::~ClapTrap()
 {
+    std::cout << "ClapTrap destructor called" << std::endl;
 }
 
 void    ClapTrap::attack(const std::string &target)
 {
-    if (_ePoints > 0 || _hPoints)
+    if (_ePoints > 0 && _hPoints > 0)
     {
         std::cout << "ClapTrap " << _name << " attacks "
             << target << ", causing " << _ad << " points of damage!" << std::endl;
@@ -57,13 +58,17 @@ void    ClapTrap::attack(const std::string &target)
 
 void    ClapTrap::takeDamage(unsigned int amount)
 {
-    _hPoints -= amount;
-    _ePoints--;
+    if (_hPoints == 0)
+        std::cout << "ClapTrap " << _name << " is already dead" << std::endl;
+    else if ((unsigned int)_hPoints < amount)
+        _hPoints = 0;
+    else
+        _hPoints -= amount;
 }
 
 void    ClapTrap::beRepaired(unsigned int amount)
 {
-    if (_ePoints > 0)
+    if (_ePoints > 0 && _hPoints >= 0)
     {
         _hPoints += amount;
         std::cout << "ClapTrap " << _name << " regained "

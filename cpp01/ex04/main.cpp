@@ -31,35 +31,21 @@ std::string replace(std::string str, std::string s1, std::string s2)
     return s;
 }
 
-int main(void)
+int main(int argc, char **argv)
 {
     std::string line;
     std::string filename;
     std::string s1;
     std::string s2;
 
-    std::cout << "Filename: ";
-    std::getline(std::cin, filename);
-    if (filename.empty())
+    if (argc != 4)
     {
-        std::cout << "Filename can't be empty" << std::endl;
+        std::cout << "Use: ./sed Filename, to_replace, replace_with" << std::endl;
         return 1;
     }
-    std::cout << "To replace: ";
-    std::getline(std::cin, s1);
-    if (s1.empty())
-    {
-        std::cout << "The string to replace can't be blank" << std::endl;
-        return 1;
-    }
-    std::cout << "Replace with: ";
-    std::getline(std::cin, s2);
-    if (s2.empty())
-    {
-        std::cout << "Can't replace with an empty line" << std::endl;
-        return 1;
-    }
-
+    filename = argv[1];
+    s1 = argv[2];
+    s2 = argv[3];
     std::ifstream inputFile(filename.c_str());
     if (!inputFile.is_open())
     {

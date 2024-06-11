@@ -26,7 +26,10 @@ Fixed::Fixed(const Fixed &other)
 Fixed &Fixed::operator=(const Fixed &other)
 {
     std::cout << "Copy assignment operator called" << std::endl;
-    this->_num = other._num;
+    if (this != &other)
+    {
+        _num = other._num;
+    }
     return *this;
 }
 
@@ -35,12 +38,14 @@ Fixed::~Fixed()
     std::cout << "Destructor called" << std::endl;
 }
 
-std::ostream &Fixed::print(std::ostream &os) const {
+std::ostream &Fixed::print(std::ostream &os) const
+{
     os << toFloat();
     return os;
 }
 
-std::ostream &operator<<(std::ostream &os, const Fixed &fixed) {
+std::ostream &operator<<(std::ostream &os, const Fixed &fixed)
+{
     return fixed.print(os);
 }
 

@@ -1,13 +1,14 @@
 #include "Harl.hpp"
 
-int main(void)
+int main(int argc, char **argv)
 {
     Harl pedro;
-    std::string lvl;
 
-    std::cout << "[ DEBUG ] [ INFO ] [ WARNING ] [ ERROR ]" << std::endl;
-    std::cout << "Select a level of complaining: ";
-    std::getline(std::cin, lvl);
-    pedro.complain(lvl);
-
+    if (argc != 2)
+    {
+        std::cout << "1 argument needed." << std::endl;
+        return (0);
+    }
+    pedro.complain(argv[1]);
+    return (1);
 }

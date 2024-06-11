@@ -8,7 +8,10 @@ int main(void)
     
     MyZombie.announce();
     for (int i = 0; i < num; i++)
+    {
+        std::cout << i << " ";
         Horde[i].announce();
+    }
     delete  [] Horde;
     return (0);
 }

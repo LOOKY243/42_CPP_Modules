@@ -10,5 +10,6 @@ int main(void)
 		_robot.guardGate();
 		_robot.takeDamage(3);
 		_robot.beRepaired(2);
+		std::cout << std::endl;
 	}
 }

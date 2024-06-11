@@ -11,7 +11,7 @@ DiamondTrap::DiamondTrap(void): ClapTrap("DiamondTrap")
 
 }
 
-DiamondTrap::DiamondTrap(std::string name): ClapTrap(name)
+DiamondTrap::DiamondTrap(std::string name): ClapTrap(name + "_clap_name")
 {
     std::cout << "DiamondTrap parameterized constructor has been called" << std::endl;
     _name = name;

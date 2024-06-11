@@ -15,6 +15,6 @@ int main(void)
         else if (input == "EXIT")
             break;
         else
-            cout << RED "Wrong input" << endl;
+            cout << RED "Wrong input" WHI << endl;
     }
 }

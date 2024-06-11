@@ -1,5 +1,5 @@
 CC=c++
-NAME = Fixed2
+NAME = Fixed3
 SRCS = Fixed.cpp main.cpp
 HEADER = Fixed.hpp
 OBJS = $(SRCS:.cpp=.o)

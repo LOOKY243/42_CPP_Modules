@@ -6,6 +6,7 @@ ScavTrap::ScavTrap(): ClapTrap("ScavTrap")
     _hPoints = 100;
     _ePoints = 50;
     _ad = 20;
+    _guardGate = false;
 }
 
 ScavTrap::ScavTrap(std::string name): ClapTrap(name)
@@ -14,6 +15,7 @@ ScavTrap::ScavTrap(std::string name): ClapTrap(name)
     _hPoints = 100;
     _ePoints = 50;
     _ad = 20;
+    _guardGate = false;
 }
 
 ScavTrap::ScavTrap(const ScavTrap &other)
@@ -23,6 +25,7 @@ ScavTrap::ScavTrap(const ScavTrap &other)
     this->_hPoints = other._hPoints;
     this->_ePoints = other._ePoints;
     this->_ad = other._ad;
+    this->_guardGate = other._guardGate;
 }
 
 ScavTrap &ScavTrap::operator=(const ScavTrap &other)
@@ -32,6 +35,7 @@ ScavTrap &ScavTrap::operator=(const ScavTrap &other)
     this->_hPoints = other._hPoints;
     this->_ePoints = other._ePoints;
     this->_ad = other._ad;
+    this->_guardGate = other._guardGate;
     return *this;
 }
 

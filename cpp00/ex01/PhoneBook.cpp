@@ -26,13 +26,23 @@ void    PhoneBook::SelectContacts(void)
     cout << CYA "└-------------------------------------------┘" WHI << endl;
     for (int i = 0; i < nb_contact; i++)
     {
-        string first = contacts[i].GetInfo(1).substr(0, 9);
-        string last = contacts[i].GetInfo(2).substr(0, 9);
-        string nick = contacts[i].GetInfo(3).substr(0, 9);
+        string first = contacts[i].GetInfo(1);
+        string last = contacts[i].GetInfo(2);
+        string nick = contacts[i].GetInfo(3);
+
         cout << CYA "|" << std::setw(10) << i + 1;
-        cout << "|" << std::setw(10) << first;
-        cout << "|" << std::setw(10) << last;
-        cout << "|" << std::setw(10) << nick << "|" << endl;
+        if (first.length() > 9)
+            cout << "|" << first.substr(0, 9) << ".";
+        else
+            cout << "|" << std::setw(10) << first;
+        if (last.length() > 9)
+            cout << "|" << last.substr(0, 9) << ".";
+        else
+            cout << "|" << std::setw(10) << last;
+        if (nick.length() > 9)
+            cout << "|" << nick.substr(0, 9) << ".|" << endl;
+        else
+            cout << "|" << std::setw(10) << nick << "|" << endl;
         cout << "└-------------------------------------------┘" WHI << endl;
     }
     getline(cin, user);
@@ -41,7 +51,7 @@ void    PhoneBook::SelectContacts(void)
         cout << RED "User " << user << " doesn't exist." WHI << endl;
     else
     {
-        cout << MAG<< contacts[iuser].GetInfo(1) << endl;
+        cout << MAG << contacts[iuser].GetInfo(1) << endl;
         cout << contacts[iuser].GetInfo(2) << endl;
         cout << contacts[iuser].GetInfo(3) << endl;
         cout << contacts[iuser].GetInfo(4) << endl;

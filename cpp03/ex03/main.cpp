@@ -12,5 +12,7 @@ int main(void)
 		_robot.attack("Human");
 		_robot.takeDamage(3);
 		_robot.beRepaired(2);
+		std::cout << "Epoints = " << _robot.getEpoints() << std::endl;;
+		std::cout << std::endl;
 	}
 }
