@@ -37,16 +37,6 @@ Bureaucrat::~Bureaucrat()
 {
 }
 
-std::exception Bureaucrat::GradeTooHighException()
-{
-    throw std::invalid_argument("Grade too high");
-}
-
-std::exception Bureaucrat::GradeTooLowException()
-{
-    throw std::invalid_argument("Grade too low");
-}
-
 const std::string Bureaucrat::getName() const
 {
     return _name;
