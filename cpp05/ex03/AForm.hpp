@@ -23,8 +23,12 @@ class AForm
         std::exception GradeTooLowException();
         void    beSigned(Bureaucrat &bureaucrat);
         virtual void    execute(Bureaucrat const &Bureaucrat) = 0;
-        int    getGradeExec();
-        int    getGradeSign();
+        const std::string getName() const;
+        bool getSign() const;
+        int getGradeSign() const;
+        int getGradeExec() const;
 };
+
+std::ostream &operator<<(std::ostream &os, AForm const &other);
 
 #endif

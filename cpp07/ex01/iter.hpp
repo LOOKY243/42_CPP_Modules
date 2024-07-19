@@ -16,4 +16,17 @@ void iter(T *arr, size_t len, void(*func)(T))
     }
 }
 
+template<typename T1, typename T2>
+void iter(T1 *arr, size_t len, void(*func)(T2))
+{
+    if (!arr)
+        return ;
+    if (!func)
+        return ;
+    for (size_t i = 0; i < len; i++)
+    {
+        func(arr[i]);
+    }
+}
+
 #endif

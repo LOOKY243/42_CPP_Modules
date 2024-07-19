@@ -50,3 +50,33 @@ void    Form::beSigned(Bureaucrat &bureaucrat)
     else
         bureaucrat.signForm(3, _name);
 }
+
+const std::string Form::getName() const
+{
+	return _name;
+}
+
+bool Form::getSign() const
+{
+	return _sign;
+}
+
+int Form::getGradeSign() const
+{
+	return _gradeSign;
+}
+
+int Form::getGradeExec() const
+{
+	return _gradeExec;
+}
+std::ostream &operator<<(std::ostream &os, Form const &other)
+{
+    if (other.getSign())
+		os << ", signed";
+	else
+		os << ", not signed";
+	os << ", can be signed by at least " << other.getGradeSign();
+	os << ", can be executed by at least " << other.getGradeExec() << ".\x1b[0m";
+    return os;
+}
