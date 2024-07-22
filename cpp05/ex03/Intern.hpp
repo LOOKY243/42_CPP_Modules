@@ -19,6 +19,9 @@ class Intern
         ~Intern();
 
         AForm *makeForm(std::string name, std::string target);
+        AForm *newShrubbery(std::string name, std::string target);
+        AForm *newRobotomy(std::string name, std::string target);
+        AForm *newPresidential(std::string name, std::string target);
 };
 
 #endif

@@ -10,7 +10,7 @@ class RobotomyRequestForm: public AForm
         bool _sign;
     public:
         RobotomyRequestForm();
-        RobotomyRequestForm(std::string _type);
+        RobotomyRequestForm(std::string _target);
         RobotomyRequestForm(const RobotomyRequestForm &other);
         RobotomyRequestForm& operator=(const RobotomyRequestForm &other);
 
@@ -18,7 +18,5 @@ class RobotomyRequestForm: public AForm
 
         void ExecForm() const;
 };
-
-
 
 #endif

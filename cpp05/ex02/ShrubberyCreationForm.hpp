@@ -19,5 +19,4 @@ class ShrubberyCreationForm: public AForm
         void ExecForm() const;
 };
 
-
 #endif

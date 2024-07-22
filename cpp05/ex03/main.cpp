@@ -1,5 +1,4 @@
 #include "Intern.hpp"
-#include <stdlib.h>
 
 int main()
 {
