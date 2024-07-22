@@ -7,7 +7,7 @@ class RobotomyRequestForm: public AForm
 {
     private:
         std::string _target;
-        bool _status;
+        bool _sign;
     public:
         RobotomyRequestForm();
         RobotomyRequestForm(std::string _type);
@@ -16,7 +16,7 @@ class RobotomyRequestForm: public AForm
 
         ~RobotomyRequestForm();
 
-        void execute(Bureaucrat const &executor);
+        void ExecForm() const;
 };
 
 

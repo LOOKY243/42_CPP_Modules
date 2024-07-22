@@ -7,6 +7,14 @@ Form::Form(): _name("Form"), _gradeSign(150), _gradeExec(150)
 
 Form::Form(std::string name, const int gradeSign, const int gradeExec): _name(name), _gradeSign(gradeSign), _gradeExec(gradeExec)
 {
+    if (gradeSign > 150)
+        GradeTooLowException();
+    else if (gradeSign < 1)
+        GradeTooHighException();
+    if (gradeExec > 150)
+        GradeTooLowException();
+    else if (gradeExec < 1)
+        GradeTooHighException();
     _sign = false;
 }
 
@@ -26,16 +34,6 @@ Form &Form::operator=(const Form &other)
 
 Form::~Form()
 {
-}
-
-std::exception Form::GradeTooHighException()
-{
-    throw std::invalid_argument("Grade too high");
-}
-
-std::exception Form::GradeTooLowException()
-{
-    throw std::invalid_argument("Grade too low");
 }
 
 void    Form::beSigned(Bureaucrat &bureaucrat)

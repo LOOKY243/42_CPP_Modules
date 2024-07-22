@@ -1,21 +1,22 @@
+#include <cstdlib>
 #include "RobotomyRequestForm.hpp"
 
 RobotomyRequestForm::RobotomyRequestForm(): AForm("RobotomyRequestForm", 72, 45)
 {
     _target = "Default";
-    _status = false;
+    _sign = false;
 }
 
 RobotomyRequestForm::RobotomyRequestForm(std::string target): AForm("RobotomyRequestForm", 72, 45)
 {
     _target = target;
-    _status = false;
+    _sign = false;
 }
 
 RobotomyRequestForm::RobotomyRequestForm(const RobotomyRequestForm &other): AForm(other)
 {
     _target = other._target;
-    _status = other._status;
+    _sign = other._sign;
 }
 
 RobotomyRequestForm &RobotomyRequestForm::operator=(const RobotomyRequestForm &other)
@@ -24,7 +25,7 @@ RobotomyRequestForm &RobotomyRequestForm::operator=(const RobotomyRequestForm &o
         return *this;
     AForm::operator=(other);
     _target = other._target;
-    _status = other._status;
+    _sign = other._sign;
     return *this;
 }
 
@@ -32,17 +33,13 @@ RobotomyRequestForm::~RobotomyRequestForm()
 {
 }
 
-void RobotomyRequestForm::execute(Bureaucrat const &executor)
+void RobotomyRequestForm::ExecForm() const
 {
-    if (executor.getGrade() <= getGradeExec())
-    {
-        std::cout << "* DRILLING NOISES *" << std::endl;
-        _status = !_status;
-        if (_status)
-            std::cout << _target << " has been robotomized successfully" << std::endl;
-        else
-            std::cout << "Robotomy has failed" << std::endl;
-    }
+    std::cout << "* DRILLING NOISES *" << std::endl;
+    srand(time(NULL));
+	int random = rand() % 100;
+    if (random < 50)
+        std::cout << _target << " has been robotomized successfully" << std::endl;
     else
-        std::cout << "Grade isn't high enough to execute the form" << std::endl;
+        std::cout << "Robotomy has failed" << std::endl;
 }

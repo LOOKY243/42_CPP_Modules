@@ -3,6 +3,9 @@
 
 #include <iostream>
 #include <string>
+#include "AForm.hpp"
+
+class AForm;
 
 class Bureaucrat
 {
@@ -37,6 +40,7 @@ class Bureaucrat
         void increment();
         void decrement();
         void signForm(int opt, std::string form);
+        void executeForm(const AForm &form) const;
 };
 
 std::ostream &operator<<(std::ostream &os, Bureaucrat const &other);

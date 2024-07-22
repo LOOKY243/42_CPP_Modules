@@ -80,3 +80,13 @@ void    Bureaucrat::signForm(int opt, std::string form)
         std::cout << getName() << " couldn't sign " << form
             << " because its grade isn't high enough" << std::endl;
 }
+
+void Bureaucrat::executeForm(const AForm &form) const
+{
+	if (!form.getSign())
+		std::cout << "\x1b[1;37m" << _name << " couldn't execute " << form.getName() << " because it's not signed.\n\x1b[0m";
+	else if (_grade <= form.getGradeExec())
+		std::cout << "\x1b[1;37m" << _name << " executed " << form.getName() << ".\n\x1b[0m";
+	else
+		std::cout << "\x1b[1;37m" << _name << " couldn't execute " << form.getName() << " because his grade is too low.\n\x1b[0m";
+}

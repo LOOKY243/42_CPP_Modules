@@ -3,8 +3,31 @@
 
 #include "Bureaucrat.hpp"
 
+class Bureaucrat;
+
 class AForm
 {
+    class FormNotSignedException: public std::exception
+    {
+        virtual const char *what() const throw()
+        {
+            return "Form is not signed";
+        }
+    };
+    class GradeTooHighException: public std::exception
+    {
+        virtual const char *what() const throw()
+        {
+            return "Grade is too high";
+        }
+    };
+    class GradeTooLowException: public std::exception
+    {
+        virtual const char *what() const throw()
+        {
+            return "Grade is too low";
+        }
+    };
     private:
         const std::string _name;
         bool _sign;
@@ -19,14 +42,13 @@ class AForm
 
         virtual ~AForm();
 
-        std::exception GradeTooHighException();
-        std::exception GradeTooLowException();
         void    beSigned(Bureaucrat &bureaucrat);
-        virtual void    execute(Bureaucrat const &Bureaucrat) = 0;
         const std::string getName() const;
         bool getSign() const;
         int getGradeSign() const;
         int getGradeExec() const;
+        void execute(const Bureaucrat &executor) const;
+        virtual void ExecForm() const = 0;
 };
 
 std::ostream &operator<<(std::ostream &os, AForm const &other);

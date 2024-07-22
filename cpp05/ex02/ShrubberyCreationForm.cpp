@@ -28,30 +28,25 @@ ShrubberyCreationForm::~ShrubberyCreationForm()
 {
 }
 
-void ShrubberyCreationForm::execute(Bureaucrat const &executor)
+void ShrubberyCreationForm::ExecForm() const
 {
-    if (executor.getGrade() <= getGradeExec())
+    std::ofstream outputFile((_target + "_shrubbery").c_str());
+    std::string trees = 
+        "         ,@@@@@@@,\n"
+        "  ,,,.   ,@@@@@@/@@,  .oo8888o.\n"
+        ",&%%&%&&%,@@@@@/@@@@@@,8888\\88/8o\n"
+        ",%&\\%&&%&&%,@@@\\@@@/@@@88\\88888/88'\n"
+        "%&&%&%&/%&&%@@\\@@/ /@@@88888\\88888'\n"
+        "%&&%/ %&%%&&@@\\ V /@@' `88\\8 `/88'\n"
+        "`&%\\ ` /%&'    |.|        \\ '|8'\n"
+        "    |o|        | |         | |\n"
+        "    |.|        | |         | |\n"
+        " \\\\// ._\\\\//_/__/  ,\\\\_//__\\\\/.  \\\\_//__/_\n";
+    if (!outputFile.is_open())
     {
-        std::ofstream outputFile((_target + "_shrubbery").c_str());
-        std::string trees = 
-            "         ,@@@@@@@,\n"
-            "  ,,,.   ,@@@@@@/@@,  .oo8888o.\n"
-            ",&%%&%&&%,@@@@@/@@@@@@,8888\\88/8o\n"
-            ",%&\\%&&%&&%,@@@\\@@@/@@@88\\88888/88'\n"
-            "%&&%&%&/%&&%@@\\@@/ /@@@88888\\88888'\n"
-            "%&&%/ %&%%&&@@\\ V /@@' `88\\8 `/88'\n"
-            "`&%\\ ` /%&'    |.|        \\ '|8'\n"
-            "    |o|        | |         | |\n"
-            "    |.|        | |         | |\n"
-            " \\\\// ._\\\\//_/__/  ,\\\\_//__\\\\/.  \\\\_//__/_\n";
-        if (!outputFile.is_open())
-        {
-            std::cerr << "Error: Unable to create output file." << std::endl;
-            return ;
-        }
-        outputFile << trees << std::endl;
-        outputFile.close();
+        std::cerr << "Error: Unable to create output file." << std::endl;
+        return ;
     }
-    else
-        std::cout << "Grade isn't high enough to execute the form" << std::endl;
+    outputFile << trees << std::endl;
+    outputFile.close();
 }

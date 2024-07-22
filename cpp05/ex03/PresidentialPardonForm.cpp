@@ -28,10 +28,7 @@ PresidentialPardonForm::~PresidentialPardonForm()
 {
 }
 
-void PresidentialPardonForm::execute(Bureaucrat const &executor)
+void PresidentialPardonForm::ExecForm() const
 {
-    if (executor.getGrade() <= getGradeExec())
-        std::cout << _target << " has been pardoned by Zaphod Beeblebrox" << std::endl;
-    else
-        std::cout << "Grade isn't high enough to execute the form" << std::endl;
+    std::cout << _target << " has been pardoned by Zaphod Beeblebrox" << std::endl;
 }
