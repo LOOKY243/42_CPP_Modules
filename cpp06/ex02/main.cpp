@@ -18,4 +18,9 @@ int main()
 
     base->identify(base);
     base->identify(*base);
+
+    delete base1;
+    delete base2;
+    delete base3;
+    delete base;
 }
