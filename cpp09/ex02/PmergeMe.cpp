@@ -42,14 +42,14 @@ int PmergeMe::InitVec(int argc, char **argv)
             tmp = atoi(argv[i]);
             if (tmp < 0)
             {
-                std::cerr << "Error: Numbers can't be neagtive" << std::endl;
+                std::cerr << "Error: Numbers can't be negative" << std::endl;
                 return 0;
             }
             vec.push_back(tmp);
         }
         else
         {
-            std::cerr << "Error" << std::endl;
+            std::cerr << "Error: Non digit argument" << std::endl;
             return 0;
         }
     }

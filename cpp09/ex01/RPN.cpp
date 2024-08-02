@@ -35,13 +35,18 @@ void RPN::RevPolish(std::string calc)
 
     while (iss >> token)
     {
+        if (token.size() != 1)
+        {
+            std::cout << "Error: Value must be between 0 and 10" << std::endl;
+            return ;
+        }
         if (std::isdigit(token[0]))
             stack.push(token);
         else
         {
             if (stack.size() <= 1)
             {
-                std::cerr << "Error" << std::endl;
+                std::cerr << "Error: invalid calculus" << std::endl;
                 return ;
             }
             int a = atoi(stack.top().c_str());
@@ -66,6 +71,11 @@ void RPN::RevPolish(std::string calc)
                     break;
             }
         }
+    }
+    if (stack.size() != 1)
+    {
+        std::cout << "Error: invalid calculus" << std::endl;
+        return ;
     }
     std::cout << atoi(stack.top().c_str()) << std::endl;
 }
