@@ -66,9 +66,12 @@ bool BitcoinExchange::isLeapYear(int year)
 
 bool BitcoinExchange::validDay(int days, int month)
 {
-    if (month % 2 && days > 31)
+    if ((month == 1 || month == 3 || month == 5
+        || month == 7 || month == 8 || month == 10
+        || month == 12) && days > 31)
         return false;
-    if (month % 2 == 0 && days > 30)
+    if ((month == 4 || month == 6
+        || month == 9 || month == 11) && days > 31)
         return false;
     else
         return true;
@@ -86,7 +89,8 @@ bool BitcoinExchange::checkDateFormat(std::string date)
     }
     if (i != 4 || year == 0)
         return false;
-    i++;
+    if (date[i] == '-')
+        i++;
     int month = 0;
     while (std::isdigit(date[i]))
     {
@@ -95,7 +99,8 @@ bool BitcoinExchange::checkDateFormat(std::string date)
     }
     if (i != 7 || month > 12 || month == 0)
         return false;
-    i++;
+    if (date[i] == '-')
+        i++;
     int days = 0;
     while (std::isdigit(date[i]))
     {
@@ -122,6 +127,11 @@ void BitcoinExchange::ParseFile()
     }
     std::string line;
     std::getline(inputFile, line);
+    if (line != "date | value")
+    {
+        std::cout << "Error: header should be 'date | value'" << std::endl;
+        return ;
+    }
     while (std::getline(inputFile, line))
     {
         std::stringstream ss(line);

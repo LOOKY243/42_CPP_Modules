@@ -46,7 +46,7 @@ void RPN::RevPolish(std::string calc)
         {
             if (stack.size() <= 1)
             {
-                std::cerr << "Error: invalid calculus" << std::endl;
+                std::cerr << "Error: invalid operation" << std::endl;
                 return ;
             }
             int a = atoi(stack.top().c_str());
@@ -62,7 +62,8 @@ void RPN::RevPolish(std::string calc)
                     stack.push(itoa(b - a));
                     break;
                 case '/':
-                    stack.push(itoa(b / a));
+                    if (a != 0 && b != 0)
+                        stack.push(itoa(b / a));
                     break;
                 case '*':
                     stack.push(itoa(b * a));   
@@ -74,7 +75,7 @@ void RPN::RevPolish(std::string calc)
     }
     if (stack.size() != 1)
     {
-        std::cout << "Error: invalid calculus" << std::endl;
+        std::cout << "Error: invalid operation" << std::endl;
         return ;
     }
     std::cout << atoi(stack.top().c_str()) << std::endl;
