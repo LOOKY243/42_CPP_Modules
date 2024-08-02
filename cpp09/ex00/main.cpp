@@ -8,5 +8,4 @@ int main(int argc, char **argv)
         return 1; 
     }
     BitcoinExchange bitEx(argv[1]);
-    bitEx.ParseFile();
 }

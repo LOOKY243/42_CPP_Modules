@@ -49,37 +49,64 @@ void BitcoinExchange::ParseData()
             _data[date] = value;
         }
     }
+    ParseFile();
 }
 
-bool checkDateFormat(std::string date)
+bool BitcoinExchange::isLeapYear(int year)
+{
+    if (year % 400 == 0)
+        return true;
+    if (year % 100 == 0)
+        return false;
+    if (year % 4 == 0)
+        return true;
+    else
+        return false;
+}
+
+bool BitcoinExchange::validDay(int days, int month)
+{
+    if (month % 2 && days > 31)
+        return false;
+    if (month % 2 == 0 && days > 30)
+        return false;
+    else
+        return true;
+}
+
+bool BitcoinExchange::checkDateFormat(std::string date)
 {
     int i = 0;
-    int val = 0;
+    int year = 0;
     
     while (std::isdigit(date[i]))
     {
-        val = val * 10 + (date[i] - '0');
+        year = year * 10 + (date[i] - '0');
         i++;
     }
-    if (i != 4 || val == 0)
+    if (i != 4 || year == 0)
         return false;
     i++;
-    val = 0;
+    int month = 0;
     while (std::isdigit(date[i]))
     {
-        val = val * 10 + (date[i] - '0');
+        month = month * 10 + (date[i] - '0');
         i++;
     }
-    if (i != 7 || val > 12 || val == 0)
+    if (i != 7 || month > 12 || month == 0)
         return false;
     i++;
-    val = 0;
+    int days = 0;
     while (std::isdigit(date[i]))
     {
-        val = val * 10 + (date[i] - '0');
+        days = days * 10 + (date[i] - '0');
         i++;
     }
-    if (i != 10 || val > 30 || val == 0)
+    if (isLeapYear(year) && month == 2 && days > 29)
+        return false;
+    if (!isLeapYear(year) && month == 2 && days > 28)
+        return false;
+    if (i != 10 || !validDay(days, month) || days == 0)
         return false;
     return true;
 }

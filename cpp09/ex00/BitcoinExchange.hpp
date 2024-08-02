@@ -27,6 +27,9 @@ class BitcoinExchange
         std::string FindDate(std::string date);
         std::string DecreaseDate(std::string _date);
         void ConvertValues(std::string date, float value);
+        bool checkDateFormat(std::string date);
+        bool isLeapYear(int year);
+        bool validDay(int days, int month);
 };
 
 
