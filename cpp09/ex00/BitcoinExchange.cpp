@@ -116,6 +116,44 @@ bool BitcoinExchange::checkDateFormat(std::string date)
     return true;
 }
 
+bool BitcoinExchange::IsDigit(std::string num)
+{
+    for (int i = 0; i < (int)num.size(); i++)
+    {
+        if (!std::isdigit(num[i]))
+            return false;
+    }
+    return true;
+}
+
+double BitcoinExchange::atod(std::string str)
+{
+    double res = 0;
+    int i = -1;
+    int fraction = 0;
+    int decimals = 1;
+    int negative = 1;
+
+    if (str[0] == '-')
+    {
+        i++;
+        negative = -1;
+    }
+    else if (str[0] == '+')
+        i++;
+    while (str[++i])
+    {
+        if (std::isdigit(str[i]))
+            res = res * 10 + (str[i] - '0');
+        if (fraction)
+            decimals *= 10;
+        else if (str[i] == '.')
+            fraction = 1;
+    }
+    res = (res / decimals) * negative;
+    return res;
+}
+
 void BitcoinExchange::ParseFile()
 {
     std::ifstream inputFile(_filename.c_str());
@@ -136,21 +174,25 @@ void BitcoinExchange::ParseFile()
     {
         std::stringstream ss(line);
         std::string date;
-        float value;
+        std::string value;
+        double val;
 
         if (std::getline(ss, date, '|'))
         {
-            ss >> value;
+            std::getline(ss, value);
+            val = atod(value);
             if (!checkDateFormat(date))
                 std::cout << "Error: bad input => " << date << std::endl;
-            else if (value > 2147483647.0)
+            else if (val > 2147483647.0)
                 std::cout << "Error: too large a number." << std::endl;
-            else if (value < 0)
+            else if (value[1] == '-')
                 std::cout << "Error: not a positive number." << std::endl;
             else if (date < _data.begin()->first)
                 std::cout << "Error: no date found for " << date << std::endl;
+            else if (IsDigit(value))
+                std::cout << "Error: not a number" << std::endl;
             else
-                ConvertValues(date, value);
+                ConvertValues(date, val);
         }
     }
 }
@@ -171,7 +213,7 @@ std::string BitcoinExchange::DecreaseDate(std::string date)
 
 std::string BitcoinExchange::FindDate(std::string date)
 {
-    std::string curDate = date;
+    std::string curDate = date.substr(0, date.size() - 1);
     if (date > _data.rbegin()->first)
         return _data.rbegin()->first;
     while(_data.find(curDate) == _data.end())

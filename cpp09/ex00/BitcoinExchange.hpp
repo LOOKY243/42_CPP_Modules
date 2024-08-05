@@ -30,6 +30,8 @@ class BitcoinExchange
         bool checkDateFormat(std::string date);
         bool isLeapYear(int year);
         bool validDay(int days, int month);
+        bool IsDigit(std::string num);
+        double atod(std::string str);
 };
 
 
