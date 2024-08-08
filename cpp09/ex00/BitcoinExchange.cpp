@@ -118,9 +118,15 @@ bool BitcoinExchange::checkDateFormat(std::string date)
 
 bool BitcoinExchange::IsDigit(std::string num)
 {
-    for (int i = 0; i < (int)num.size(); i++)
+    num = num.substr(1, num.size());
+    bool decimal = false;
+    for (std::string::iterator it = num.begin(); it != num.end(); it++)
     {
-        if (!std::isdigit(num[i]))
+        if (*it == '.' && decimal == false)
+            decimal = true;
+        else if (*it == '.' && decimal == true)
+            return false;
+        else if (!std::isdigit(*it))
             return false;
     }
     return true;
@@ -189,8 +195,8 @@ void BitcoinExchange::ParseFile()
                 std::cout << "Error: not a positive number." << std::endl;
             else if (date < _data.begin()->first)
                 std::cout << "Error: no date found for " << date << std::endl;
-            else if (IsDigit(value))
-                std::cout << "Error: not a number" << std::endl;
+            else if (!IsDigit(value))
+                std::cout << "Error: Value is not a valid number" << std::endl;
             else
                 ConvertValues(date, val);
         }

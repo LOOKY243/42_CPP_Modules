@@ -62,7 +62,7 @@ void RPN::RevPolish(std::string calc)
                     stack.push(itoa(b - a));
                     break;
                 case '/':
-                    if (a != 0 && b != 0)
+                    if (a != 0)
                         stack.push(itoa(b / a));
                     break;
                 case '*':
