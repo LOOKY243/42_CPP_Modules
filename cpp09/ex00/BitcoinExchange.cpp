@@ -71,7 +71,7 @@ bool BitcoinExchange::validDay(int days, int month)
         || month == 12) && days > 31)
         return false;
     if ((month == 4 || month == 6
-        || month == 9 || month == 11) && days > 31)
+        || month == 9 || month == 11) && days > 30)
         return false;
     else
         return true;
