@@ -40,12 +40,12 @@ int PmergeMe::InitVec(int argc, char **argv)
         if (IsDigit(argv[i]))
         {
             tmp = atoi(argv[i]);
-            if (tmp < 0)
-            {
-                std::cerr << "Error: Numbers can't be negative" << std::endl;
-                return 0;
-            }
             vec.push_back(tmp);
+        }
+        else if (argv[i][0] == '-')
+        {
+            std::cerr << "Error: Numbers can't be negative" << std::endl;
+            return 0;
         }
         else
         {
@@ -65,16 +65,16 @@ int PmergeMe::InitDeq(int argc, char **argv)
         if (IsDigit(argv[i]))
         {
             tmp = atoi(argv[i]);
-            if (tmp < 0)
-            {
-                std::cerr << "Error" << std::endl;
-                return 0;
-            }
             deq.push_back(tmp);
+        }
+        else if (argv[i][0] == '-')
+        {
+            std::cerr << "Error: Numbers can't be negative" << std::endl;
+            return 0;
         }
         else
         {
-            std::cerr << "Error" << std::endl;
+            std::cerr << "Error: Non digit argument" << std::endl;
             return 0;
         }
     }
@@ -95,7 +95,7 @@ void PmergeMe::Init(int argc, char **argv)
 
     std::clock_t start = std::clock();
     InitVec(argc, argv);
-    VecAlgorithm();
+    SortVector(0, vec.size() - 1);
     std::clock_t stop = std::clock();
     elapsedTime = (stop - start) * 1e6 / CLOCKS_PER_SEC;
     
@@ -110,7 +110,7 @@ void PmergeMe::Init(int argc, char **argv)
     start = std::clock();
     if (!InitDeq(argc, argv))
         return ;
-    DeqAlgorithm();
+    SortDeque(0, deq.size() - 1);
     stop = std::clock();
     elapsedTime = (stop - start) * 1e6 / CLOCKS_PER_SEC;
 
@@ -118,158 +118,118 @@ void PmergeMe::Init(int argc, char **argv)
         << " elements with std::deque " << elapsedTime << " us" << std::endl;
 }
 
-int PmergeMe::VecBinarySearch(const std::vector<int>& vec, int value)
+void PmergeMe::SortVector(int left, int right)
 {
-    int left = 0;
-    int right = vec.size();
-
-    while (left < right)
+    if (left < right)
     {
         int mid = left + (right - left) / 2;
 
-        if (vec[mid] < value)
-            left = mid + 1;
+        SortVector(left, mid);
+        SortVector(mid + 1, right);
+
+        if (right - left + 1 > 2)
+            MergeVector(left, mid, right);
         else
-            right = mid;
-    }
-    return left;
-}
-
-void PmergeMe::VecAlgorithm()
-{
-    std::vector<std::pair<int, int> > pairVec;
-
-    for (std::vector<int>::iterator it = vec.begin(); it != vec.end(); ++it)
-    {
-        int first = *it;
-        int second = -1;
-
-        if (it + 1 != vec.end())
-            second = *(++it);
-
-        std::pair<int, int> pair;
-        if (first)
-            pair.first = (first > second) ? first : second;
-        if (second != -1)
-            pair.second = (pair.first == first) ? second : first;
-        else
-            pair.second = second;
-
-        pairVec.push_back(pair);
-    }
-
-    vec.clear();
-    for (int i = 0; i < (int)pairVec.size(); i++)
-        vec.push_back(pairVec[i].first);
-    std::sort(vec.begin(), vec.end());
-
-    std::vector<std::vector<int> > Dvec;
-    int size = 2;
-    int oldSize = 0;
-    int current = 0;
-    int power = 1;
-    std::vector<int> tmp;
-    for (int i = 0; i < (int)pairVec.size(); i++)
-    {
-        if (current == size)
-        {
-            oldSize = size;
-            current = 0;
-            power++;
-            size = pow(size, power) - oldSize;
-            std::reverse(tmp.begin(), tmp.end());
-            Dvec.push_back(tmp);
-            tmp.clear();
-        }
-        tmp.push_back(pairVec[i].second);
-        current++;
-    }
-    if (tmp.size() != 0)
-        Dvec.push_back(tmp);
-    for (int i = 0; i < (int)Dvec.size(); i++)
-    {
-        for (int j = 0; j < (int)Dvec[i].size(); j++)
-        {
-            if (Dvec[i][j] != -1)
-                vec.insert(vec.begin() + VecBinarySearch(vec, Dvec[i][j]), Dvec[i][j]);
-        }
+            InsertionVector(left, right);
     }
 }
 
-int PmergeMe::DeqBinarySearch(const std::deque<int>& deq, int value)
+void PmergeMe::MergeVector(int left, int mid, int right)
 {
-    int left = 0;
-    int right = deq.size();
+    std::vector<int> _tmp(right - left + 1);
+    int i = left;
+    int j = mid + 1;
+    unsigned int k = 0;
 
-    while (left < right)
+    while (i <= mid && j <= right)
+    {
+        if (vec[i] <= vec[j])
+            _tmp[k++] = vec[i++];
+        else
+            _tmp[k++] = vec[j++];
+    }
+
+    while (i <= mid)
+        _tmp[k++] = vec[i++];
+
+    while (j <= right)
+        _tmp[k++] = vec[j++];
+
+    for (k = 0; k < _tmp.size(); k++)
+        vec[left + k] = _tmp[k];
+}
+
+void PmergeMe::InsertionVector(int left, int right)
+{
+    for (int i = left + 1; i <= right; ++i)
+    {
+        int key = vec[i];
+        int j = i - 1;
+
+        while (j >= left && vec[j] > key)
+        {
+            vec[j + 1] = vec[j];
+            --j;
+        }
+
+        vec[j + 1] = key;
+    }
+}
+
+void PmergeMe::SortDeque(int left, int right)
+{
+    if (left < right)
     {
         int mid = left + (right - left) / 2;
 
-        if (deq[mid] < value)
-            left = mid + 1;
+        SortDeque(left, mid);
+        SortDeque(mid + 1, right);
+
+        if (right - left + 1 > 2)
+            MergeDeque(left, mid, right);
         else
-            right = mid;
+            InsertionDeque(left, right);
     }
-    return left;
 }
 
-void PmergeMe::DeqAlgorithm()
+void PmergeMe::MergeDeque(int left, int mid, int right)
 {
-    std::deque<std::pair<int, int> > pairDeq;
+    std::vector<int> _tmp(right - left + 1);
+    int i = left;
+    int j = mid + 1;
+    unsigned int k = 0;
 
-    for (std::deque<int>::iterator it = deq.begin(); it != deq.end(); ++it)
+    while (i <= mid && j <= right)
     {
-        int first = *it;
-        int second = -1;
-
-        if (it + 1 != deq.end())
-            second = *(++it);
-
-        std::pair<int, int> pair;
-        if (first)
-            pair.first = (first > second) ? first : second;
-        if (second != -1)
-            pair.second = (pair.first == first) ? second : first;
+        if (deq[i] <= deq[j])
+            _tmp[k++] = deq[i++];
         else
-            pair.second = second;
-
-        pairDeq.push_back(pair);
+            _tmp[k++] = deq[j++];
     }
 
-    deq.clear();
-    for (int i = 0; i < (int)pairDeq.size(); i++)
-        deq.push_back(pairDeq[i].first);
-    std::sort(deq.begin(), deq.end());
+    while (i <= mid)
+        _tmp[k++] = deq[i++];
 
-    std::deque<std::deque<int> > Ddeq;
-    int size = 2;
-    int oldSize = 0;
-    int current = 0;
-    int power = 1;
-    std::deque<int> tmp;
-    for (int i = 0; i < (int)pairDeq.size(); i++)
+    while (j <= right)
+        _tmp[k++] = deq[j++];
+
+    for (k = 0; k < _tmp.size(); k++)
+        deq[left + k] = _tmp[k];
+}
+
+void PmergeMe::InsertionDeque(int left, int right)
+{
+    for (int i = left + 1; i <= right; ++i)
     {
-        if (current == size)
+        int key = deq[i];
+        int j = i - 1;
+
+        while (j >= left && deq[j] > key)
         {
-            oldSize = size;
-            current = 0;
-            power++;
-            size = pow(size, power) - oldSize;
-            std::reverse(tmp.begin(), tmp.end());
-            Ddeq.push_back(tmp);
-            tmp.clear();
+            deq[j + 1] = deq[j];
+            --j;
         }
-        tmp.push_back(pairDeq[i].second);
-        current++;
-    }
-    if (tmp.size() != 0)
-        Ddeq.push_back(tmp);
-    for (int i = 0; i < (int)Ddeq.size(); i++)
-    {
-        for (int j = 0; j < (int)Ddeq[i].size(); j++)
-        {
-            if (Ddeq[i][j] != -1)
-                deq.insert(deq.begin() + DeqBinarySearch(deq, Ddeq[i][j]), Ddeq[i][j]);
-        }
+
+        deq[j + 1] = key;
     }
 }

@@ -39,14 +39,43 @@ void BitcoinExchange::ParseData()
         return ;
     }
     std::string line;
+    std::getline(inputFile, line);
+    if (line != "date,exchange_rate")
+    {
+        std::cout << "Error: database header should be 'date,exchange_rate'" << std::endl;
+        return ;
+    }
     while (std::getline(inputFile, line))
     {
         std::stringstream ss(line);
         std::string date;
+        std::string val;
         float value;
-        if (std::getline(ss, date, ',') && (ss >> value))
+        if (std::getline(ss, date, ','))
         {
-            _data[date] = value;
+            if (!std::getline(ss, val))
+            {
+                std::cout << "Error: Missing exchange rate for date " << date << std::endl;
+                return ;
+            }
+            if (val.empty())
+            {
+                std::cout << "Error: Exchange rate is missing for date " << date << std::endl;
+                return ;
+            }
+            value = atod(val);
+            if (!checkDateFormat(date))
+            {
+                std::cout << "Error: bad input => " << date << std::endl;
+                return ;
+            }
+            if (!IsDigit(val))
+            {
+                std::cout << "Error: Value is not a valid number" << std::endl;
+                return ;
+            }
+            else
+                _data[date] = value;
         }
     }
     ParseFile();
@@ -185,12 +214,18 @@ void BitcoinExchange::ParseFile()
 
         if (std::getline(ss, date, '|'))
         {
-            std::getline(ss, value);
+            if (!std::getline(ss, value))
+            {
+                std::cout << "Error: Missing value " << date << std::endl;
+                continue ;
+            }
+            else if (value.empty())
+                std::cout << "Error: Missing value " << date << std::endl;
             val = atod(value);
             if (!checkDateFormat(date))
                 std::cout << "Error: bad input => " << date << std::endl;
-            else if (val > 2147483647.0)
-                std::cout << "Error: too large a number." << std::endl;
+            else if (val > 1000)
+                std::cout << "Error: max value is 1000" << std::endl;
             else if (value[1] == '-')
                 std::cout << "Error: not a positive number." << std::endl;
             else if (date < _data.begin()->first)

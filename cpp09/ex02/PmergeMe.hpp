@@ -5,8 +5,7 @@
 #include <sstream>
 #include <vector>
 #include <ctime>
-#include <cstdlib>
-#include <cmath>
+#include <cstddef>
 #include <algorithm>
 #include <deque>
 
@@ -26,10 +25,12 @@ class PmergeMe
         int InitVec(int argc, char **argv);
         int InitDeq(int argc, char **argv);
         bool IsDigit(std::string num);
-        void VecAlgorithm();
-        void DeqAlgorithm();
-        int VecBinarySearch(const std::vector<int>& vec, int value);
-        int DeqBinarySearch(const std::deque<int>& vec, int value);
+        void SortVector(int left, int right);
+        void MergeVector(int left, int mid, int right);
+        void InsertionVector(int left, int right);
+        void SortDeque(int left, int right);
+        void MergeDeque(int left, int mid, int right);
+        void InsertionDeque(int left, int right);
 };
 
 #endif
